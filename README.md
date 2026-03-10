@@ -1,6 +1,6 @@
 <h1>ExpNo 1 :Developing AI Agent with PEAS Description</h1>
-<h3>Name: Saravanan N</h3>
-<h3>Register Number/Staff Id: TSML006</h3>
+<h3>Name: VIGNESHWARAN P</h3>
+<h3>Register Number: 212224040358</h3>
 
 
 <h3>AIM:</h3>
@@ -40,3 +40,57 @@
 <p>Treat unhealthy patients in each room. And check for the unhealthy patients in random room</p>
 <h3>STEP 5:</h3>
 <p>Measure the performance parameters: For each treatment performance incremented, for each movement performance decremented</p>
+
+# Program
+
+    
+    import random
+    class HospitalEnvironment:
+    def __init__(self, num_rooms=2):
+        
+        self.rooms = [round(random.uniform(97.0, 102.0), 1) for _ in range(num_rooms)]
+        self.num_rooms = num_rooms
+
+    def get_patient_temperature(self, room_id):
+        return self.rooms[room_id]
+
+    def update_patient(self, room_id):
+        """After treatment, patient becomes healthy (reset temperature)."""
+        self.rooms[room_id] = round(random.uniform(97.0, 98.5), 1)
+    class MedicineAgent:
+    def __init__(self, environment):
+        self.env = environment
+        self.current_room = 0
+        self.performance = 0
+
+    def check_and_treat(self):
+        temp = self.env.get_patient_temperature(self.current_room)
+        if temp > 98.5:
+            print(f"Room {self.current_room}: Patient has fever ({temp}°F). Prescribing medicine...")
+            self.performance += 1
+            self.env.update_patient(self.current_room)
+        else:
+            print(f"Room {self.current_room}: Patient is healthy ({temp}°F). No medicine needed.")
+
+    def move(self):
+        self.current_room = (self.current_room + 1) % self.env.num_rooms
+        self.performance -= 1
+        print(f"Agent moved to Room {self.current_room}. Performance decreased.")
+
+    def run(self, steps=6):
+        for step in range(steps):
+            print(f"\nStep {step+1}:")
+            self.check_and_treat()
+            self.move()
+        print("\nFinal Performance:", self.performance)
+    hospital = HospitalEnvironment(num_rooms=2)
+    agent = MedicineAgent(hospital)
+    agent.run(steps=4)
+
+
+# Output
+
+<img width="449" height="350" alt="image" src="https://github.com/user-attachments/assets/bb350240-e18d-4c79-9647-7efe546f909d" />
+
+# Result 
+Thus given experiment is done successfully. 
